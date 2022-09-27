@@ -12,6 +12,7 @@ import routeBundle from './route-bundle';
 import cache from '../cache';
 import chartBundle from './chart-bundle';
 import chartDetailBundle from './chart-detail-bundle';
+import modalBundle from './modal-bundle';
 
 const mockTokens = {
   ADMIN:
@@ -59,6 +60,7 @@ export default composeBundles(
       },
     },
   }),
+  modalBundle,
   chartBundle,
   chartDetailBundle
 );

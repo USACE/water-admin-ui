@@ -4,10 +4,11 @@ import { useConnect } from 'redux-bundler-hook';
 import Login from './app-pages/login.js';
 
 export default function App() {
-  const { route: Route, authIsLoggedIn: isLoggedIn } = useConnect(
-    'selectRoute',
-    'selectAuthIsLoggedIn'
-  );
+  const {
+    route: Route,
+    pathname,
+    authIsLoggedIn: isLoggedIn,
+  } = useConnect('selectRoute', 'selectPathname', 'selectAuthIsLoggedIn');
 
   return !isLoggedIn ? (
     <Layout>
@@ -16,7 +17,7 @@ export default function App() {
     </Layout>
   ) : (
     <Layout>
-      <Layout.Header showBreadcrumb={true}></Layout.Header>
+      <Layout.Header showBreadcrumb={pathname !== '/'}></Layout.Header>
       <Layout.Main>
         <Route />
       </Layout.Main>

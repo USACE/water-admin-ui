@@ -1,16 +1,26 @@
+import ConditionalWrapper from '../utils/conditional-wrapper';
 import Breadcrumb from './breadcrumb';
+import Modal from './modal';
 
 function Layout({ children }) {
-  return <>{children}</>;
+  return (
+    <>
+      <Modal />
+      {children}
+    </>
+  );
 }
 
 function Header({ showBreadcrumb = true, children }) {
   return (
     <header style={{ marginTop: 32 }} class='container'>
-      <hgroup>
+      <ConditionalWrapper
+        condition={showBreadcrumb}
+        wrapper={(children) => <hgroup>{children}</hgroup>}
+      >
         <h3 style={{ color: 'gray' }}>Water Admin</h3>
-        {showBreadcrumb ? <Breadcrumb /> : null}
-      </hgroup>
+        {showBreadcrumb && <Breadcrumb />}
+      </ConditionalWrapper>
       {children}
     </header>
   );
