@@ -89,21 +89,22 @@ export default function ChartList() {
   return (
     <>
       <ChartListHeader />
-      {chartItems?.length &&
-        chartItems.map((v) => (
-          <section>
-            <a href={`/charts/${v.slug}`}>
-              <div>
-                <article>
-                  <hgroup>
-                    <h2>{v.name}</h2>
-                    <h3>Provided by Huntington District, USACE</h3>
-                  </hgroup>
-                </article>
-              </div>
-            </a>
-          </section>
-        ))}
+      {chartItems?.length
+        ? chartItems.map((v) => (
+            <section>
+              <a href={`/charts/${v.slug}`}>
+                <div>
+                  <article>
+                    <hgroup>
+                      <h2>{v.name}</h2>
+                      <h3>Provided by Huntington District, USACE</h3>
+                    </hgroup>
+                  </article>
+                </div>
+              </a>
+            </section>
+          ))
+        : null}
     </>
   );
 }
