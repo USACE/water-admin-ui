@@ -18,7 +18,12 @@ export default function Login() {
             <h1>Sign in</h1>
             <h3>You will be prompted for your CAC PIN</h3>
           </hgroup>
-          <form>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              doAuthLogin();
+            }}
+          >
             <fieldset>
               <label for='remember'>
                 <input
@@ -30,13 +35,7 @@ export default function Login() {
                 Remember me
               </label>
             </fieldset>
-            <button
-              type='submit'
-              class='contrast'
-              onClick={() => {
-                doAuthLogin();
-              }}
-            >
+            <button type='submit' class='contrast'>
               Login
             </button>
           </form>

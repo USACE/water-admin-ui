@@ -11,7 +11,7 @@ export default function App() {
 
   return !isLoggedIn ? (
     <Layout>
-      <Layout.Header></Layout.Header>
+      <Layout.Header showBreadcrumb={false}></Layout.Header>
       <Login />
     </Layout>
   ) : (
