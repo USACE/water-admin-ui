@@ -30,7 +30,7 @@ export default composeBundles(
     name: 'auth',
     host: process.env.REACT_APP_AUTH_HOST,
     realm: 'water',
-    client: 'water',
+    client: 'a2w',
     redirectUrl: process.env.REACT_APP_AUTH_REDIRECT_URL,
     refreshInterval: 120,
     sessionEndWarning: 600,
