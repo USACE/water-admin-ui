@@ -1,17 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
+
+import { getNavHelper } from 'internal-nav-helper';
+import getStore from './app-bundles';
+
+import cache from './cache';
+import { ReduxBundlerProvider } from 'redux-bundler-hook';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+cache.getAll().then((initialData) => {
+  const store = getStore(initialData);
+
+  if (process.env.NODE_ENV === 'development') window.store = store;
+
+  root.render(
+    <ReduxBundlerProvider store={store}>
+      <div onClick={getNavHelper(store.doUpdateUrl)}>
+        <App />
+      </div>
+    </ReduxBundlerProvider>
+  );
+});
