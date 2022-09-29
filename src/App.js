@@ -1,5 +1,6 @@
 import Layout from './app-components/layout.js';
 import { useConnect } from 'redux-bundler-hook';
+import './app.css';
 
 import Login from './app-pages/login.js';
 

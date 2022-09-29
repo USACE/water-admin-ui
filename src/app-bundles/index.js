@@ -10,9 +10,16 @@ import createJwtApiBundle from '@usace/create-jwt-api-bundle';
 import routeBundle from './route-bundle';
 
 import cache from '../cache';
+
 import chartBundle from './chart-bundle';
+import chartTypeBundle from './chart-type-bundle.js';
 import chartDetailBundle from './chart-detail-bundle';
+
+// todo; this should be converted to bundle maintained at @usace/modal-bundle
 import modalBundle from './modal-bundle';
+// todo; this should be converted to bundle maintained at @usace/create-search-bundle
+import createSearchBundle from './create-search-bundle';
+import locationSearchBundle from './location-search-bundle';
 
 const mockTokens = {
   ADMIN:
@@ -24,9 +31,11 @@ const mockUser = process.env.REACT_APP_AUTH_MOCK_USER
   : null;
 
 export default composeBundles(
+  chartBundle,
+  chartDetailBundle,
+  chartTypeBundle,
   createCacheBundle({ cacheFn: cache.set }),
   createUrlBundle,
-  routeBundle,
   createAuthBundle({
     name: 'auth',
     host: process.env.REACT_APP_AUTH_HOST,
@@ -60,7 +69,10 @@ export default composeBundles(
       },
     },
   }),
+  createSearchBundle({
+    name: 'search',
+    searchableBundles: [locationSearchBundle],
+  }),
   modalBundle,
-  chartBundle,
-  chartDetailBundle
+  routeBundle
 );

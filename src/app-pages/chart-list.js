@@ -1,4 +1,5 @@
 import { useConnect } from 'redux-bundler-hook';
+import NewChartModal from '../app-modals/new-chart-modal.js';
 
 const NewChartButton = () => {
   const { doModalOpen } = useConnect('doModalOpen');
@@ -21,45 +22,6 @@ const NewChartButton = () => {
   );
 };
 
-const NewChartModal = () => {
-  const { doModalClose } = useConnect('doModalClose');
-  return (
-    <article>
-      <header>New Chart</header>
-      <p>
-        Nunc nec ligula a tortor sollicitudin dictum in vel enim. Quisque
-        facilisis turpis vel eros dictum aliquam et nec turpis. Sed eleifend a
-        dui nec ullamcorper. Praesent vehicula lacus ac justo accumsan
-        ullamcorper.
-      </p>
-      <footer>
-        <a
-          role='button'
-          href='/charts'
-          class='secondary'
-          onClick={(e) => {
-            e.preventDefault();
-            doModalClose();
-          }}
-        >
-          Cancel
-        </a>
-        {/* todo; dynamically set href to slug of new chart to be created */}
-        <a
-          href='#chart-save'
-          role='button'
-          onClick={(e) => {
-            e.preventDefault();
-            console.log('TODO; CONFIRM NEW CHART SAVE');
-            doModalClose();
-          }}
-        >
-          Confirm
-        </a>
-      </footer>
-    </article>
-  );
-};
 const ChartListHeader = () => {
   return (
     <>
