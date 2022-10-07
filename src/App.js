@@ -1,8 +1,10 @@
 import Layout from './app-components/layout.js';
 import { useConnect } from 'redux-bundler-hook';
-import './app.css';
 
 import Login from './app-pages/login.js';
+
+// Primary .scss stylesheet for the application
+import './scss/pico-bootstrap-grid.scss';
 
 export default function App() {
   const {

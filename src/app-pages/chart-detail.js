@@ -1,5 +1,6 @@
 import { useConnect } from 'redux-bundler-hook';
 import DamProfileChartForm from '../forms/dam-profile-chart.js';
+import DeleteChartModal from '../app-modals/delete-chart-modal.js';
 
 function ChartConfigurationForm(type, props) {
   // @TODO: Change to a form slug rather than UUID
@@ -10,18 +11,39 @@ function ChartConfigurationForm(type, props) {
 }
 
 export default function ChartDetail() {
-  const { chartDetailByRoute: info, chartDetailMappingObj: mappingObj } =
-    useConnect('selectChartDetailByRoute', 'selectChartDetailMappingObj');
+  const {
+    doModalOpen,
+    chartDetailByRoute: info,
+    chartDetailMappingObj: mappingObj,
+  } = useConnect(
+    'doModalOpen',
+    'selectChartDetailByRoute',
+    'selectChartDetailMappingObj'
+  );
 
   return !info ? null : (
     <>
       <section>
-        <hgroup>
-          <h3>{info.name}</h3>
-          <p>
-            <small>TODO; Provided by USACE, Huntington District</small>
-          </p>
-        </hgroup>
+        <div className='container mb-4'>
+          <div className='row align-items-start'>
+            <div className='col'>
+              <h3 className='mb-0'>{info.name}</h3>
+              <p className='mb-0'>
+                <small>
+                  Provided by {info.provider_name} ({info.provider_slug})
+                </small>
+              </p>
+            </div>
+            <button
+              onClick={() => {
+                doModalOpen(DeleteChartModal);
+              }}
+              className='col-auto align-middle mb-0 p-2 secondary'
+            >
+              x Delete
+            </button>
+          </div>
+        </div>
       </section>
       <section id='chart'>
         <article>

@@ -13,7 +13,7 @@ export default createRestBundle({
   getTemplate: `${apiUrl}/visualizations/:chart_slug`,
   // putTemplate: `${apiUrl}/products/:item.id`,
   // postTemplate: `${apiUrl}/products`,
-  // deleteTemplate: `${apiUrl}/products/:item.id`,
+  // deleteTemplate: `${apiUrl}/visualizations/:item.slug`,
   fetchActions: ['URL_UPDATED'], // @todo; more surgical fetchAction than URL_UPDATED
   urlParamSelectors: [],
   forceFetchActions: [],

@@ -20,6 +20,7 @@ import modalBundle from './modal-bundle';
 // todo; this should be converted to bundle maintained at @usace/create-search-bundle
 import createSearchBundle from './create-search-bundle';
 import locationSearchBundle from './location-search-bundle';
+import providerBundle from './provider-bundle';
 
 const mockTokens = {
   ADMIN:
@@ -74,5 +75,6 @@ export default composeBundles(
     searchableBundles: [locationSearchBundle],
   }),
   modalBundle,
+  providerBundle,
   routeBundle
 );

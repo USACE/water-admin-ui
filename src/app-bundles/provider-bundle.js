@@ -3,16 +3,16 @@ import createRestBundle from '@usace/create-rest-bundle';
 const apiUrl = process.env.REACT_APP_WATER_API_URL;
 
 export default createRestBundle({
-  name: 'chart',
+  name: 'provider',
   uid: 'slug',
   prefetch: true,
   staleAfter: 0, //5min
   persist: false,
-  routeParam: 'chart_slug',
-  getTemplate: `${apiUrl}/visualizations`,
+  routeParam: 'provider_slug',
+  getTemplate: `${apiUrl}/providers`,
   // putTemplate: `${apiUrl}/visualizations/:item.id`,
-  postTemplate: `${apiUrl}/visualizations`,
-  deleteTemplate: `${apiUrl}/visualizations/:item.slug`,
+  // postTemplate: `${apiUrl}`,
+  // deleteTemplate: `${apiUrl}/products/:item.id`,
   fetchActions: [],
   urlParamSelectors: [],
   forceFetchActions: [],

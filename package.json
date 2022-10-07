@@ -20,6 +20,7 @@
     "redux-bundler": "^28.0.3",
     "redux-bundler-hook": "^1.0.3",
     "redux-bundler-react": "^1.2.0",
+    "sass": "^1.55.0",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -47,5 +48,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@picocss/pico": "^1.5.6",
+    "bootstrap": "^5.2.2"
   }
 }

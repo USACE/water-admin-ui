@@ -19,15 +19,18 @@ export default function NewChartModal() {
     doSearchQueryUpdate,
     chartTypeItems,
     locationSearchItems,
+    providerItems,
   } = useConnect(
     'doModalClose',
     'doChartSave',
     'doSearchFire',
     'doSearchQueryUpdate',
     'selectChartTypeItems',
-    'selectLocationSearchItems'
+    'selectLocationSearchItems',
+    'selectProviderItems'
   );
 
+  const [provider, setProvider] = useState(null);
   const [name, setName] = useState(null);
   const [type, setType] = useState(null);
   const [location, setLocation] = useState(null);
@@ -44,6 +47,7 @@ export default function NewChartModal() {
       location_slug: location || null,
       name: name || null,
       type_id: type || null,
+      provider_slug: provider || null,
     };
     doChartSave(payload);
     doModalClose();
@@ -53,6 +57,31 @@ export default function NewChartModal() {
     <form onSubmit={handleSubmit}>
       <article>
         <header>New Chart</header>
+        {/* Provider */}
+        {/* todo; Limit providers shown here to providers in user's token */}
+        <label for='provider'>Provider</label>
+        <select
+          id='provider'
+          onChange={(e) => {
+            if (!e.target.value.trim()) {
+              setProvider(null);
+              return;
+            }
+            setProvider(e.target.value);
+          }}
+          required
+        >
+          <option value='' selected>
+            Select a provider...
+          </option>
+          {providerItems?.length
+            ? providerItems.map((p, idx) => (
+                <option key={idx} value={p.slug}>
+                  {p.name}
+                </option>
+              ))
+            : null}
+        </select>
         {/* CHART NAME FIELD */}
         <label for='name'>
           Chart Name
@@ -135,12 +164,12 @@ export default function NewChartModal() {
               onClick={(e) => {
                 doModalClose();
               }}
-              class='secondary no-margin'
+              className='secondary m-0'
             >
               Cancel
             </button>
 
-            <button type='submit' class='no-margin'>
+            <button type='submit' className='m-0'>
               Submit
             </button>
           </div>

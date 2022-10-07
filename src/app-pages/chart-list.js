@@ -56,10 +56,24 @@ export default function ChartList() {
             <section>
               <a href={`/charts/${v.slug}`}>
                 <div>
+                  <div
+                    style={{
+                      fontFamily: 'monospace',
+                      float: 'right',
+                      padding: '1rem',
+                      background:
+                        'linear-gradient(45deg, white, hsl(195deg 85% 41%))',
+                      color: 'black',
+                      borderTopRightRadius: '0.25rem',
+                      borderBottomLeftRadius: '2rem',
+                    }}
+                  >
+                    {v.provider_slug}
+                  </div>
                   <article>
                     <hgroup>
                       <h2>{v.name}</h2>
-                      <h3>Provided by Huntington District, USACE</h3>
+                      <h3>Provided by {v.provider_name}</h3>
                     </hgroup>
                   </article>
                 </div>
