@@ -3,12 +3,21 @@ import { useEffect, useState } from 'react';
 import TimeseriesSearchInput from '../app-components/inputs/timeseries-search-input';
 
 const DamProfileChartForm = ({ mapping }) => {
+  // Values
   const [pool, setPool] = useState(mapping.pool);
   const [tail, setTail] = useState(mapping.tail);
   const [inflow, setInflow] = useState(mapping.inflow);
   const [outflow, setOutflow] = useState(mapping.outflow);
   const [damtop, setDamtop] = useState(mapping['top-of-dam']);
   const [streambed, setStreambed] = useState(mapping.streambed);
+
+  // Invalid Checks for Form Fields (used to set aria-invalid property on form values)
+  const [poolIsValid, setPoolIsValid] = useState(null);
+  const [tailIsValid, setTailIsValid] = useState(null);
+  const [inflowIsValid, setInflowIsValid] = useState(null);
+  const [outflowIsValid, setOutflowIsValid] = useState(null);
+  const [damtopIsValid, setDamtopIsValid] = useState(null);
+  const [streambedIsValid, setStreambedIsValid] = useState(null);
 
   useEffect(() => {
     setPool(mapping?.pool);
@@ -27,7 +36,24 @@ const DamProfileChartForm = ({ mapping }) => {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            console.log('SUBMITTED!');
+            if (
+              poolIsValid &&
+              tailIsValid &&
+              inflowIsValid &&
+              outflowIsValid &&
+              damtopIsValid &&
+              streambedIsValid
+            ) {
+              const payload = [
+                {
+                  variable: 'pool',
+                  key: pool.key,
+                  datasource_type: pool.datasource_type,
+                },
+              ];
+              console.log(JSON.stringify(payload));
+              console.log('SUBMITTED!');
+            }
           }}
         >
           <div class='grid'>
@@ -37,6 +63,8 @@ const DamProfileChartForm = ({ mapping }) => {
               title='Pool Water Level'
               value={pool}
               setValue={setPool}
+              isValid={poolIsValid}
+              setIsValid={setPoolIsValid}
             />
             {/* TAILWATER INPUT */}
             <TimeseriesSearchInput
@@ -44,6 +72,8 @@ const DamProfileChartForm = ({ mapping }) => {
               title='Tailwater Level'
               value={tail}
               setValue={setTail}
+              isValid={tailIsValid}
+              setIsValid={setTailIsValid}
             />
           </div>
           {/* Inflow and Outflow */}
@@ -54,6 +84,8 @@ const DamProfileChartForm = ({ mapping }) => {
               title='Inflow'
               value={inflow}
               setValue={setInflow}
+              isValid={inflowIsValid}
+              setIsValid={setInflowIsValid}
             />
             {/* OUTFLOW INPUT */}
             <TimeseriesSearchInput
@@ -61,6 +93,8 @@ const DamProfileChartForm = ({ mapping }) => {
               title='Outflow'
               value={outflow}
               setValue={setOutflow}
+              isValid={outflowIsValid}
+              setIsValid={setOutflowIsValid}
             />
           </div>
           {/* Dam Top and Streambed */}
@@ -71,6 +105,8 @@ const DamProfileChartForm = ({ mapping }) => {
               title='Top of Dam'
               value={damtop}
               setValue={setDamtop}
+              isValid={damtopIsValid}
+              setIsValid={setDamtopIsValid}
             />
             {/* STREAMBED INPUT */}
             <TimeseriesSearchInput
@@ -78,9 +114,12 @@ const DamProfileChartForm = ({ mapping }) => {
               title='Streambed'
               value={streambed}
               setValue={setStreambed}
+              isValid={streambedIsValid}
+              setIsValid={setStreambedIsValid}
             />
           </div>
           <button type='submit'>Submit</button>
+          <pre>{JSON.stringify([pool, tail, inflow, outflow])}</pre>
         </form>
       </section>
     </>
