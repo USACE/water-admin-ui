@@ -4,13 +4,20 @@ export default function DeleteChartModal() {
   const {
     doChartDelete,
     doModalClose,
+    doUpdateUrl,
     chartByRoute: chart,
-  } = useConnect('doChartDelete', 'doModalClose', 'selectChartByRoute');
+  } = useConnect(
+    'doChartDelete',
+    'doModalClose',
+    'doUpdateUrl',
+    'selectChartByRoute'
+  );
 
   const handleSubmit = (e) => {
     e.preventDefault();
     doChartDelete(chart);
     doModalClose();
+    doUpdateUrl('/charts');
   };
 
   return (

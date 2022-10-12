@@ -19,8 +19,12 @@ import chartDetailBundle from './chart-detail-bundle';
 import modalBundle from './modal-bundle';
 // todo; this should be converted to bundle maintained at @usace/create-search-bundle
 import createSearchBundle from './create-search-bundle';
-import locationSearchBundle from './location-search-bundle';
+
 import providerBundle from './provider-bundle';
+
+// Searchable Bundles
+import locationSearchBundle from './location-search-bundle';
+import timeseriesSearchBundle from './timeseries-search-bundle';
 
 const mockTokens = {
   ADMIN:
@@ -72,7 +76,7 @@ export default composeBundles(
   }),
   createSearchBundle({
     name: 'search',
-    searchableBundles: [locationSearchBundle],
+    searchableBundles: [locationSearchBundle, timeseriesSearchBundle],
   }),
   modalBundle,
   providerBundle,
