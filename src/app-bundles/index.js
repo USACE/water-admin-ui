@@ -14,6 +14,7 @@ import cache from '../cache';
 import chartBundle from './chart-bundle';
 import chartTypeBundle from './chart-type-bundle.js';
 import chartDetailBundle from './chart-detail-bundle';
+import chartMappingBundle from './chart-mapping-bundle';
 
 // todo; this should be converted to bundle maintained at @usace/modal-bundle
 import modalBundle from './modal-bundle';
@@ -39,6 +40,7 @@ export default composeBundles(
   chartBundle,
   chartDetailBundle,
   chartTypeBundle,
+  chartMappingBundle,
   createCacheBundle({ cacheFn: cache.set }),
   createUrlBundle,
   createAuthBundle({

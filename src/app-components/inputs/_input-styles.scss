@@ -1,0 +1,29 @@
+input[role='combobox'] {
+  margin-bottom: 0px;
+}
+
+ul[data-headlessui-state='open'] {
+  margin-top: -10px;
+  position: absolute;
+  max-height: 240px;
+  overflow-y: auto;
+  border-radius: 0.25rem;
+  box-shadow: 15px;
+  background: white;
+  border: 0.5px solid hsl(195deg 85% 41%);
+}
+
+li.timeseries-combobox-option {
+  position: relative;
+  overflow-x: hidden;
+  border-bottom: 0.5px dashed gray;
+  padding: 10px;
+}
+
+li[data-headlessui-state='active'] {
+  background: lightgray;
+}
+
+li::marker {
+  content: '';
+}

@@ -29,7 +29,7 @@ export default createRestBundle({
         }
         const obj = {};
         detail.mapping.forEach((m) => {
-          obj[m.variable] = m.key;
+          obj[m.variable] = m;
         });
         return obj;
       }
