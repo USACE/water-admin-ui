@@ -9,8 +9,10 @@ ul[data-headlessui-state='open'] {
   overflow-y: auto;
   border-radius: 0.25rem;
   box-shadow: 15px;
-  background: white;
-  border: 0.5px solid hsl(195deg 85% 41%);
+  background: var(--background-color);
+  font-size: medium;
+  border: 0.5px solid var(--form-element-active-border-color);
+  padding: 0;
 }
 
 li.timeseries-combobox-option {
@@ -20,8 +22,25 @@ li.timeseries-combobox-option {
   padding: 10px;
 }
 
-li[data-headlessui-state='active'] {
-  background: lightgray;
+li.combobox-option {
+  position: relative;
+  overflow-x: hidden;
+  border-bottom: 0.5px dashed gray;
+  padding: 10px;
+  width: 100%;
+}
+
+li.combobox-option:hover {
+  background-color: var(--primary-hover);
+  color: var(--primary-inverse);
+}
+
+li.combobox-option .primary {
+  font-size: large;
+}
+li.combobox-option .secondary {
+  font-size: 0.9em;
+  opacity: 0.6;
 }
 
 li::marker {
