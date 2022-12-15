@@ -4,11 +4,11 @@ const apiUrl = process.env.REACT_APP_WATER_API_URL;
 
 export default createRestBundle({
   name: 'provider',
-  uid: 'slug',
+  uid: 'provider',
   prefetch: true,
   staleAfter: 0, //5min
   persist: false,
-  routeParam: 'provider_slug',
+  routeParam: 'provider',
   getTemplate: `${apiUrl}/providers`,
   // putTemplate: `${apiUrl}/visualizations/:item.id`,
   // postTemplate: `${apiUrl}`,

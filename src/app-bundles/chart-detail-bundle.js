@@ -10,12 +10,12 @@ export default createRestBundle({
   staleAfter: 0, //5min
   persist: false,
   routeParam: 'chart_slug',
-  getTemplate: `${apiUrl}/visualizations/:chart_slug`,
-  // putTemplate: `${apiUrl}/products/:item.id`,
-  // postTemplate: `${apiUrl}/products`,
-  // deleteTemplate: `${apiUrl}/visualizations/:item.slug`,
+  getTemplate: `${apiUrl}/charts/:chart_slug`,
+  // putTemplate: '',
+  // postTemplate: '',
+  // deleteTemplate: '',
   fetchActions: ['URL_UPDATED'], // @todo; more surgical fetchAction than URL_UPDATED
-  urlParamSelectors: [],
+  urlParamSelectors: ['selectRouteParams'],
   forceFetchActions: [],
   sortBy: '',
   sortAsc: false,

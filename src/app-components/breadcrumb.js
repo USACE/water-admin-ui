@@ -16,7 +16,7 @@ const pathParts = (path) => {
 
 const partNames = {
   '': MdHome,
-  charts: 'Charts',
+  charts: 'charts',
 };
 
 export default function Breadcrumb() {
@@ -41,7 +41,7 @@ export default function Breadcrumb() {
                 // All items in breadcrumb are clickable, except for right-most item.
                 // Build pathname for href by joining pathname parts with /
                 <a href={p === '' ? '/' : parts.slice(0, idx + 1).join('/')}>
-                  {p === '' ? <MdHome size={24} /> : partNames[p]}
+                  {p === '' ? <MdHome size={24} /> : partNames[p] || p}
                 </a>
               )}
             </li>

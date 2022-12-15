@@ -1,15 +1,24 @@
+import { useConnect } from 'redux-bundler-hook';
+
+function ProviderList() {
+  const { providerItems: providers } = useConnect('selectProviderItems');
+  return providers && providers.length ? (
+    <ul>
+      {providers.map((p) => (
+        <li>
+          <a href={`/${p.provider}`}>{`${p.provider}: ${p.provider_name}`} </a>
+        </li>
+      ))}
+    </ul>
+  ) : null;
+}
+
 export default function Home() {
   return (
     <>
       <section>
-        <a href='/charts'>
-          <article class='grid'>
-            <hgroup>
-              <h3>Manage Charts</h3>
-              <h6>Dam Profile Charts, Lock Charts, and More</h6>
-            </hgroup>
-          </article>
-        </a>
+        <h3>Data Providers</h3>
+        <ProviderList />
       </section>
     </>
   );

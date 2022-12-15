@@ -19,7 +19,7 @@ export default function NewChartModal() {
     doSearchQueryUpdate,
     chartTypeItems,
     locationSearchItems,
-    providerItems,
+    providerByRoute: provider,
   } = useConnect(
     'doModalClose',
     'doChartSave',
@@ -27,10 +27,9 @@ export default function NewChartModal() {
     'doSearchQueryUpdate',
     'selectChartTypeItems',
     'selectLocationSearchItems',
-    'selectProviderItems'
+    'selectProviderByRoute'
   );
 
-  const [provider, setProvider] = useState(null);
   const [name, setName] = useState(null);
   const [type, setType] = useState(null);
   const [location, setLocation] = useState(null);
@@ -44,10 +43,10 @@ export default function NewChartModal() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const payload = {
-      location_slug: location || null,
+      provider: provider?.provider,
+      location: location ? { location: location } : null,
       name: name || null,
-      type_id: type || null,
-      provider_slug: provider || null,
+      type: type || null,
     };
     doChartSave(payload);
     doModalClose();
@@ -60,28 +59,8 @@ export default function NewChartModal() {
         {/* Provider */}
         {/* todo; Limit providers shown here to providers in user's token */}
         <label for='provider'>Provider</label>
-        <select
-          id='provider'
-          onChange={(e) => {
-            if (!e.target.value.trim()) {
-              setProvider(null);
-              return;
-            }
-            setProvider(e.target.value);
-          }}
-          required
-        >
-          <option value='' selected>
-            Select a provider...
-          </option>
-          {providerItems?.length
-            ? providerItems.map((p, idx) => (
-                <option key={idx} value={p.slug}>
-                  {p.name}
-                </option>
-              ))
-            : null}
-        </select>
+        <input type='text' value={provider?.provider_name} disabled />
+
         {/* CHART NAME FIELD */}
         <label for='name'>
           Chart Name
@@ -119,7 +98,7 @@ export default function NewChartModal() {
           </option>
           {chartTypeItems?.length
             ? chartTypeItems.map((t, idx) => (
-                <option key={idx} value={t.id}>
+                <option key={idx} value={t.slug}>
                   {t.name}
                 </option>
               ))

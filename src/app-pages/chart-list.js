@@ -32,14 +32,7 @@ const ChartListHeader = () => {
             <NewChartButton />
           </h3>
           {/* todo; filters currently shown to demonstrate concept. should drive filters from querystring, background ajax fetch as necessary */}
-          <div id='filters' style={{ display: 'flex', gap: 12 }}>
-            <small>
-              <a href='#todo'>x</a> provider:lrh
-            </small>
-            <small>
-              <a href='#todo'>x</a> type:dam-profile-chart
-            </small>
-          </div>
+          <div id='filters' style={{ display: 'flex', gap: 12 }}></div>
         </hgroup>
       </section>
     </>
@@ -47,14 +40,17 @@ const ChartListHeader = () => {
 };
 
 export default function ChartList() {
-  const { chartItems } = useConnect('selectChartItems');
+  const { providerByRoute: provider, chartItems } = useConnect(
+    'selectProviderByRoute',
+    'selectChartItems'
+  );
   return (
     <>
       <ChartListHeader />
       {chartItems?.length
         ? chartItems.map((v) => (
             <section>
-              <a href={`/charts/${v.slug}`}>
+              <a href={`/${provider?.provider}/charts/${v.slug}`}>
                 <div>
                   <div
                     style={{

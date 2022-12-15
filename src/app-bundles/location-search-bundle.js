@@ -20,7 +20,7 @@ export default createSearchableBundle({
       apiGet(
         `${
           process.env.REACT_APP_WATER_API_URL
-        }/search/locations?q=${encodeURIComponent(q)}`,
+        }/locations?q=${encodeURIComponent(q)}`,
         (err, json) => {
           if (err) {
             dispatch({

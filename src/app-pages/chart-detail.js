@@ -30,7 +30,7 @@ export default function ChartDetail() {
               <h3 className='mb-0'>{info.name}</h3>
               <p className='mb-0'>
                 <small>
-                  Provided by {info.provider_name} ({info.provider_slug})
+                  Provided by {info.provider_name} ({info.provider})
                 </small>
               </p>
             </div>

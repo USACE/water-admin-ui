@@ -15,9 +15,14 @@ export default function DeleteChartModal() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    doChartDelete(chart);
+    doChartDelete(
+      chart,
+      () => {
+        doUpdateUrl(`/${chart.provider}/charts`);
+      },
+      true
+    );
     doModalClose();
-    doUpdateUrl('/charts');
   };
 
   return (
