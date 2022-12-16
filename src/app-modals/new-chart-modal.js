@@ -6,27 +6,21 @@
 // }
 // TODO; Change type_id to 'type' (slug of chart) in api
 // TODO; May need to add office_symbol to this payload to simplify things
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import { useConnect } from 'redux-bundler-hook';
 
-import debounce from 'lodash/debounce';
+import LocationCombobox from '../app-components/inputs/location-search-input';
 
 export default function NewChartModal() {
   const {
     doModalClose,
     doChartSave,
-    doSearchFire,
-    doSearchQueryUpdate,
     chartTypeItems,
-    locationSearchItems,
     providerByRoute: provider,
   } = useConnect(
     'doModalClose',
     'doChartSave',
-    'doSearchFire',
-    'doSearchQueryUpdate',
     'selectChartTypeItems',
-    'selectLocationSearchItems',
     'selectProviderByRoute'
   );
 
@@ -34,10 +28,11 @@ export default function NewChartModal() {
   const [type, setType] = useState(null);
   const [location, setLocation] = useState(null);
 
-  // debounced search fire function
-  const debouncedSearchFire = useMemo(
-    () => debounce(doSearchFire, 300),
-    [doSearchFire]
+  // Invalid Checks for Form Fields (used to set aria-invalid property on form values)
+  // TODO; More strict validation checking. Currently, if a string value is set, it is considered valid.
+  //       In the future, may want to consider checking if string value represents a valid timeseries
+  const [locationIsValid, setLocationIsValid] = useState(
+    location ? true : false
   );
 
   const handleSubmit = (e) => {
@@ -81,7 +76,7 @@ export default function NewChartModal() {
           />
         </label>
         {/* CHART TYPE FIELD */}
-        <label for='charttype'>Chart Type</label>
+        <label htmlFor='charttype'>Chart Type</label>
         <select
           id='charttype'
           onChange={(e) => {
@@ -104,30 +99,34 @@ export default function NewChartModal() {
               ))
             : null}
         </select>
-        {/* LOCATION FIELD; TODO; Improve this select to be a dropdown w/ typeahead*/}
-        <label for='location'>Location</label>
+        {/* LOCATION FIELD */}
+        <LocationCombobox
+          title='Location'
+          value={location}
+          setValue={setLocation}
+          isValid={!location || locationIsValid}
+          setIsValid={setLocationIsValid}
+          isRequired={false}
+          providerFilter={provider}
+        />
+        {/* CHART NAME FIELD */}
+        <label htmlFor='name'>Chart Name</label>
         <input
+          aria-invalid={!name}
           type='text'
-          id='location'
-          list='locationlist'
-          name='Location'
-          placeholder='Location (optional)'
+          id='name'
+          name='Name'
+          placeholder='Name'
           autoComplete='off'
           onChange={(e) => {
-            doSearchQueryUpdate(e.target.value);
-            debouncedSearchFire();
             if (!e.target.value.trim()) {
-              setLocation(null);
+              setName(null);
               return;
             }
-            setLocation(e.target.value.trim());
+            setName(e.target.value.trim());
           }}
+          required
         />
-        <datalist id='locationlist'>
-          {locationSearchItems.map((s, idx) => (
-            <option value={s.slug}>{s.name}</option>
-          ))}
-        </datalist>
 
         <footer>
           {/* FLEXBOX CONTAINER TO HOLD BUTTONS */}
