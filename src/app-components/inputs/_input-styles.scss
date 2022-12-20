@@ -30,7 +30,7 @@ li.combobox-option {
   width: 100%;
 }
 
-li.combobox-option:hover {
+li.combobox-option.active {
   background-color: var(--primary-hover);
   color: var(--primary-inverse);
 }

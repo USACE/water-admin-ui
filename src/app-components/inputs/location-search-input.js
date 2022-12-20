@@ -3,13 +3,25 @@ import { debounce } from 'lodash';
 import { Combobox } from '@headlessui/react';
 import { useConnect } from 'redux-bundler-hook';
 
-const LocationItem = ({ locKey, name, public_name, kind, provider_name }) => {
+const LocationItem = ({
+  attributes,
+  code,
+  datatype,
+  datatype_name,
+  provider,
+  provider_name,
+  slug,
+  state,
+  state_name,
+}) => {
   return (
-    <div key={locKey}>
-      <div className="primary">{name}</div>
-      <div className="secondary">Public Name: {public_name}</div>
-      <div className="secondary">Provider: {provider_name}</div>
-      <div className="secondary">Kind: {kind}</div>
+    <div key={slug}>
+      <div className='primary'>{code}</div>
+      <div className='secondary'>Datatype: {datatype_name}</div>
+      <div className='secondary'>Provider: {provider_name}</div>
+      <div className='secondary'>
+        State: {state_name} ({state})
+      </div>
     </div>
   );
 };
@@ -21,7 +33,6 @@ function LocationCombobox({
   isValid,
   setIsValid,
   isRequired,
-  providerFilter,
 }) {
   const {
     doSearchClear,
@@ -41,45 +52,46 @@ function LocationCombobox({
     [doSearchFire]
   );
 
-  // limit the location results if a providerFilter is not null
-  const locationResults = providerFilter
-    ? locationSearchItems.filter((l) => l.provider_slug === providerFilter)
-    : locationSearchItems;
-
   return (
     <Combobox
       value={value}
       onChange={(v) => {
+        console.log('CHANGED IT!!!');
+        console.log(v);
         setValue(v);
-        setIsValid(true); // TODO; Automatically setIsValid true when timeseries is selected. May want to add more explicit validation checking
+        setIsValid(true); // TODO; Automatically setIsValid true when location is selected. May want to add more explicit validation checking
       }}
     >
       <Combobox.Label>{title}</Combobox.Label>
       <Combobox.Input
         // aria-invalid={!isValid}
-        displayValue={(l) => l?.name}
+        displayValue={(l) => l && `${l?.code} (${l?.provider?.toUpperCase()})`}
         placeholder={isRequired ? title : `${title} (optional)`}
-        autoComplete="off"
+        autoComplete='off'
         onChange={(event) => {
+          // only show search results if more than 3 characters are typed in input
           if (event.target.value?.length < 3) {
             doSearchClear();
+            // reset the selected location to 'null' if the entire field is deleted
+            if (event.target.value?.length === 0) {
+              setValue(null);
+            }
+            return;
           }
           doSearchQueryUpdate(event.target.value);
           debouncedSearchFire();
         }}
       />
       <Combobox.Options>
-        {locationResults.map((l) => (
-          <Combobox.Option autoComplete="off" key={`${l.slug}`} value={l}>
+        {locationSearchItems.map((l) => (
+          <Combobox.Option autoComplete='off' key={l.slug} value={l}>
             {({ active, selected }) => (
               <li
                 className={`combobox-option${active ? ' active' : ''}${
                   selected ? ' selected' : ''
                 }`}
               >
-                {/* To avoid conflict between React.js keyword 'key' and timeseries entity property 'key',
-                    the prop name tsKey is used to pass the .key property of timeseries */}
-                <LocationItem locKey={l.slug} {...l} />
+                <LocationItem {...l} />
               </li>
             )}
           </Combobox.Option>

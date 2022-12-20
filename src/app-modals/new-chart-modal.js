@@ -39,7 +39,7 @@ export default function NewChartModal() {
     e.preventDefault();
     const payload = {
       provider: provider?.provider,
-      location: location ? { location: location } : null,
+      location: location || null,
       name: name || null,
       type: type || null,
     };
@@ -107,27 +107,7 @@ export default function NewChartModal() {
           isValid={!location || locationIsValid}
           setIsValid={setLocationIsValid}
           isRequired={false}
-          providerFilter={provider}
         />
-        {/* CHART NAME FIELD */}
-        <label htmlFor='name'>Chart Name</label>
-        <input
-          aria-invalid={!name}
-          type='text'
-          id='name'
-          name='Name'
-          placeholder='Name'
-          autoComplete='off'
-          onChange={(e) => {
-            if (!e.target.value.trim()) {
-              setName(null);
-              return;
-            }
-            setName(e.target.value.trim());
-          }}
-          required
-        />
-
         <footer>
           {/* FLEXBOX CONTAINER TO HOLD BUTTONS */}
           <div
