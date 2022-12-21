@@ -4,19 +4,23 @@ import { Combobox } from '@headlessui/react';
 import { useConnect } from 'redux-bundler-hook';
 
 const TimeseriesItem = ({
-  datasource_type,
+  datatype_name,
   provider,
-  tsKey,
-  latest_time,
+  provider_name,
+  timeseriesKey,
   latest_value,
 }) => {
   return (
-    <div>
-      <div>Key: {tsKey}</div>
-      <div>Provider: {provider}</div>
-      <div>Datasource: {datasource_type}</div>
-      <div>Latest Time: {latest_time}</div>
-      <div>Latest Value: {latest_value}</div>
+    <div key={`${provider}-${timeseriesKey}`}>
+      <div className='primary'>{timeseriesKey}</div>
+      <div className='secondary'>Datatype: {datatype_name}</div>
+      <div className='secondary'>Provider: {provider_name}</div>
+      <div className='secondary'>
+        Latest Value:{' '}
+        {latest_value?.length
+          ? `${latest_value[1]} at ${latest_value[0]}`
+          : '---'}
+      </div>
     </div>
   );
 };
@@ -51,10 +55,18 @@ function TimeseriesCombobox({ title, value, setValue, isValid, setIsValid }) {
       <Combobox.Label>{title}</Combobox.Label>
       <Combobox.Input
         aria-invalid={!isValid}
-        displayValue={(t) => t?.key}
+        displayValue={(t) => t && `${t?.key} (${t?.provider?.toUpperCase()})`}
+        placeholder='Search Timeseries...'
         onChange={(event) => {
+          // only show search results if more than 3 characters are typed in input
           if (event.target.value?.length < 3) {
             doSearchClear();
+            // reset the selected location to 'null' if the entire field is deleted
+            if (event.target.value?.length === 0) {
+              setValue(null);
+              setIsValid(false);
+            }
+            return;
           }
           doSearchQueryUpdate(event.target.value);
           debouncedSearchFire();
@@ -62,16 +74,20 @@ function TimeseriesCombobox({ title, value, setValue, isValid, setIsValid }) {
       />
       <Combobox.Options>
         {timeseriesSearchItems.map((t) => (
-          <Combobox.Option key={`${t.provider}-${t.key}`} value={t}>
+          <Combobox.Option
+            autoComplete='off'
+            key={`${t.provider}-${t.key}`}
+            value={t}
+          >
             {({ active, selected }) => (
               <li
-                className={`timeseries-combobox-option${
-                  active ? ' active' : ''
-                }${selected ? ' selected' : ''}`}
+                className={`combobox-option${active ? ' active' : ''}${
+                  selected ? ' selected' : ''
+                }`}
               >
                 {/* To avoid conflict between React.js keyword 'key' and timeseries entity property 'key',
-                    the prop name tsKey is used to pass the .key property of timeseries */}
-                <TimeseriesItem tsKey={t.key} {...t} />
+                    the prop name timeseriesKey is used to pass the .key property of timeseries */}
+                <TimeseriesItem timeseriesKey={t.key} {...t} />
               </li>
             )}
           </Combobox.Option>

@@ -1,5 +1,5 @@
 import { useConnect } from 'redux-bundler-hook';
-import NewChartModal from '../app-modals/new-chart-modal.js';
+import NewChartModal from '../../app-modals/new-chart-modal.js';
 
 const NewChartButton = () => {
   const { doModalOpen } = useConnect('doModalOpen');
@@ -40,9 +40,14 @@ const ChartListHeader = () => {
 };
 
 export default function ChartList() {
-  const { providerByRoute: provider, chartItems } = useConnect(
+  const {
+    providerByRoute: provider,
+    chartItems,
+    chartTypeItemsObject: chartTypeObj,
+  } = useConnect(
     'selectProviderByRoute',
-    'selectChartItems'
+    'selectChartItems',
+    'selectChartTypeItemsObject'
   );
   return (
     <>
@@ -52,24 +57,15 @@ export default function ChartList() {
             <section>
               <a href={`/${provider?.provider}/charts/${v.slug}`}>
                 <div>
-                  <div
-                    style={{
-                      fontFamily: 'monospace',
-                      float: 'right',
-                      padding: '1rem',
-                      background:
-                        'linear-gradient(45deg, white, hsl(195deg 85% 41%))',
-                      color: 'black',
-                      borderTopRightRadius: '0.25rem',
-                      borderBottomLeftRadius: '2rem',
-                    }}
-                  >
-                    {v.provider_slug}
-                  </div>
                   <article>
                     <hgroup>
                       <h2>{v.name}</h2>
-                      <h3>Provided by {v.provider_name}</h3>
+                      <h4 className=''>
+                        A {chartTypeObj[v.type]?.name} for Location:{' '}
+                        {`(${v?.location?.provider?.toUpperCase()}) ${
+                          v?.location?.code
+                        }`}
+                      </h4>
                     </hgroup>
                   </article>
                 </div>

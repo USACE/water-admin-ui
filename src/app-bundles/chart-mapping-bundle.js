@@ -9,8 +9,8 @@ export default createRestBundle({
   staleAfter: 0, //5min
   persist: false,
   routeParam: 'chart_slug',
-  // postTemplate Note; :slug corresponds to visualization.slug, coming from selectChartByRoute
-  postTemplate: `${apiUrl}/visualizations/:slug/assign`,
+  postTemplate: `${apiUrl}/providers/:provider/charts/:slug/mapping`,
+  deleteTemplate: `${apiUrl}/providers/:provider/charts/:slug/mapping`,
   fetchActions: [],
   urlParamSelectors: ['selectChartByRoute'],
   forceFetchActions: [],

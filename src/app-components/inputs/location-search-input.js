@@ -56,8 +56,6 @@ function LocationCombobox({
     <Combobox
       value={value}
       onChange={(v) => {
-        console.log('CHANGED IT!!!');
-        console.log(v);
         setValue(v);
         setIsValid(true); // TODO; Automatically setIsValid true when location is selected. May want to add more explicit validation checking
       }}

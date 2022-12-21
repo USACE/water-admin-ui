@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useConnect } from 'redux-bundler-hook';
 
-import TimeseriesCombobox from '../app-components/inputs/timeseries-search-input';
+import TimeseriesCombobox from '../../app-components/inputs/timeseries-search-input';
 
-const DamProfileChartForm = ({ mapping }) => {
+const DamProfileChartDetails = ({ mapping }) => {
   // Connect
   const { doChartMappingSave } = useConnect('doChartMappingSave');
 
@@ -44,7 +44,7 @@ const DamProfileChartForm = ({ mapping }) => {
       payload.push({
         variable: 'pool',
         key: pool.key,
-        datasource_type: pool.datasource_type,
+        datatype: pool.datatype,
         provider: pool.provider,
       });
     }
@@ -52,7 +52,7 @@ const DamProfileChartForm = ({ mapping }) => {
       payload.push({
         variable: 'tail',
         key: tail.key,
-        datasource_type: tail.datasource_type,
+        datatype: tail.datatype,
         provider: tail.provider,
       });
     }
@@ -60,7 +60,7 @@ const DamProfileChartForm = ({ mapping }) => {
       payload.push({
         variable: 'inflow',
         key: inflow.key,
-        datasource_type: inflow.datasource_type,
+        datatype: inflow.datatype,
         provider: inflow.provider,
       });
     }
@@ -68,7 +68,7 @@ const DamProfileChartForm = ({ mapping }) => {
       payload.push({
         variable: 'outflow',
         key: outflow.key,
-        datasource_type: outflow.datasource_type,
+        datatype: outflow.datatype,
         provider: outflow.provider,
       });
     }
@@ -76,7 +76,7 @@ const DamProfileChartForm = ({ mapping }) => {
       payload.push({
         variable: 'damtop',
         key: damtop.key,
-        datasource_type: damtop.datasource_type,
+        datatype: damtop.datatype,
         provider: damtop.provider,
       });
     }
@@ -84,7 +84,7 @@ const DamProfileChartForm = ({ mapping }) => {
       payload.push({
         variable: 'streambed',
         key: streambed.key,
-        datasource_type: streambed.datasource_type,
+        datatype: streambed.datatype,
         provider: streambed.provider,
       });
     }
@@ -92,8 +92,15 @@ const DamProfileChartForm = ({ mapping }) => {
     doChartMappingSave(payload);
   }
 
+  const chartRef = useRef(null);
+
   return (
     <>
+      <section id='chart' ref={chartRef}>
+        {/* <article>
+          <h4 style={{ textAlign: 'center' }}>CHART HERE</h4>
+        </article> */}
+      </section>
       <section id='mappings'>
         <h4>Required Mappings</h4>
         {/* Pool and Tailwater */}
@@ -157,4 +164,4 @@ const DamProfileChartForm = ({ mapping }) => {
   );
 };
 
-export default DamProfileChartForm;
+export default DamProfileChartDetails;

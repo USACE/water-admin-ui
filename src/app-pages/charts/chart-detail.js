@@ -1,11 +1,14 @@
 import { useConnect } from 'redux-bundler-hook';
-import DamProfileChartForm from '../forms/dam-profile-chart.js';
-import DeleteChartModal from '../app-modals/delete-chart-modal.js';
+import DeleteChartModal from '../../app-modals/delete-chart-modal.js';
 
-function ChartConfigurationForm(type, props) {
-  // @TODO: Change to a form slug rather than UUID
+// Specialized detail sections, specific to each chart type
+import DamProfileChartDetail from './chart-detail-dam-profile.js';
+import BasicScatterChartDetail from './chart-detail-basic-scatter.js';
+
+function SpecializedChartDetail(type, props) {
   const formComponents = {
-    '53da77d0-6550-4f02-abf8-4bcd1a596a7c': <DamProfileChartForm {...props} />,
+    'dam-profile-chart': <DamProfileChartDetail {...props} />,
+    'example-scatter': <BasicScatterChartDetail {...props} />,
   };
   return formComponents[type];
 }
@@ -13,7 +16,7 @@ function ChartConfigurationForm(type, props) {
 export default function ChartDetail() {
   const {
     doModalOpen,
-    chartDetailByRoute: info,
+    chartDetailByRoute: chart,
     chartDetailMappingObj: mappingObj,
   } = useConnect(
     'doModalOpen',
@@ -21,16 +24,17 @@ export default function ChartDetail() {
     'selectChartDetailMappingObj'
   );
 
-  return !info ? null : (
+  return !chart ? null : (
     <>
       <section>
         <div className='container mb-4'>
           <div className='row align-items-start'>
             <div className='col'>
-              <h3 className='mb-0'>{info.name}</h3>
+              <h3 className='mb-0'>{chart.name}</h3>
               <p className='mb-0'>
                 <small>
-                  Provided by {info.provider_name} ({info.provider})
+                  Provided by {chart.provider_name} (
+                  {chart?.provider?.toUpperCase()})
                 </small>
               </p>
             </div>
@@ -50,8 +54,8 @@ export default function ChartDetail() {
           <h4 style={{ textAlign: 'center' }}>CHART HERE</h4>
         </article>
       </section>
-      {/* Return correct ChartConfigurationForm based on chart type_id */}
-      {ChartConfigurationForm(info.type_id, { mapping: mappingObj })}
+      {/* Return correct SpecializedChartDetail based on chart's type */}
+      {SpecializedChartDetail(chart.type, { mapping: mappingObj })}
     </>
   );
 }
