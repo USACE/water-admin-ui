@@ -37,6 +37,7 @@ const createSearchBundle = (opts) => {
     name: config.name,
     getReducer: () => {
       const initialState = {
+        _entities: [], // which entities were searched in last call to doSearchFire(...entities)
         _isOpen: false,
         _shouldFire: false,
         _query: '',
@@ -117,10 +118,15 @@ const createSearchBundle = (opts) => {
       ({ dispatch }) => {
         dispatch({ type: 'SEARCH_FOCUS' });
       },
+    // doSearchFire accepts zero or more strings, corresponding to the
+    // searchable bundles that should respond to action SEARCH_FIRE
     doSearchFire:
-      () =>
+      (...entities) =>
       ({ dispatch }) => {
-        dispatch({ type: 'SEARCH_FIRE' });
+        dispatch({
+          type: 'SEARCH_FIRE',
+          payload: entities?.length ? { _entities: entities } : {},
+        });
       },
 
     doSearchQueryUpdate:

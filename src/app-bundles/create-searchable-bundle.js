@@ -54,7 +54,9 @@ const createSearchableBundle = (opts) => {
     ) => {
       switch (type) {
         case config.searchAction:
-          return { ...state, _shouldFire: true };
+          return payload?._entities?.includes(config.searchEntity)
+            ? { ...state, _shouldFire: true }
+            : { ...state };
         case actions.SEARCH_START:
           return { ...state, _shouldFire: false, _isLoading: true };
         case actions.SEARCH_ERROR:

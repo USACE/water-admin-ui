@@ -48,7 +48,7 @@ function LocationCombobox({
 
   // debounced search fire function
   const debouncedSearchFire = useMemo(
-    () => debounce(doSearchFire, 150),
+    () => debounce(() => doSearchFire('location'), 150),
     [doSearchFire]
   );
 

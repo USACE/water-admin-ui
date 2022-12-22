@@ -13,7 +13,7 @@ const DamProfileChartDetails = ({ mapping }) => {
   const [inflow, setInflow] = useState(mapping.inflow);
   const [outflow, setOutflow] = useState(mapping.outflow);
   const [damtop, setDamtop] = useState(mapping.damtop);
-  const [streambed, setStreambed] = useState(mapping.streambed);
+  const [dambottom, setDambottom] = useState(mapping.dambottom);
 
   // Invalid Checks for Form Fields (used to set aria-invalid property on form values)
   // TODO; More strict validation checking. Currently, if a string value is set, it is considered valid.
@@ -23,8 +23,8 @@ const DamProfileChartDetails = ({ mapping }) => {
   const [inflowIsValid, setInflowIsValid] = useState(inflow ? true : false);
   const [outflowIsValid, setOutflowIsValid] = useState(outflow ? true : false);
   const [damtopIsValid, setDamtopIsValid] = useState(damtop ? true : false);
-  const [streambedIsValid, setStreambedIsValid] = useState(
-    streambed ? true : false
+  const [dambottomIsValid, setDambottomIsValid] = useState(
+    dambottom ? true : false
   );
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const DamProfileChartDetails = ({ mapping }) => {
     setInflow(mapping?.inflow);
     setOutflow(mapping?.outflow);
     setDamtop(mapping?.damtop);
-    setStreambed(mapping?.streambed);
+    setDambottom(mapping?.dambottom);
   }, [mapping]);
 
   function handleSubmit(e) {
@@ -80,12 +80,12 @@ const DamProfileChartDetails = ({ mapping }) => {
         provider: damtop.provider,
       });
     }
-    if (streambedIsValid) {
+    if (dambottomIsValid) {
       payload.push({
-        variable: 'streambed',
-        key: streambed.key,
-        datatype: streambed.datatype,
-        provider: streambed.provider,
+        variable: 'dambottom',
+        key: dambottom.key,
+        datatype: dambottom.datatype,
+        provider: dambottom.provider,
       });
     }
     // SUBMIT PAYLOAD
@@ -146,13 +146,13 @@ const DamProfileChartDetails = ({ mapping }) => {
               isValid={damtopIsValid}
               setIsValid={setDamtopIsValid}
             />
-            {/* STREAMBED INPUT */}
+            {/* DAM BOTTOM INPUT */}
             <TimeseriesCombobox
-              title='Streambed'
-              value={streambed}
-              setValue={setStreambed}
-              isValid={streambedIsValid}
-              setIsValid={setStreambedIsValid}
+              title='Bottom of Dam (Streambed)'
+              value={dambottom}
+              setValue={setDambottom}
+              isValid={dambottomIsValid}
+              setIsValid={setDambottomIsValid}
             />
           </div>
           <button type='submit' onClick={handleSubmit}>

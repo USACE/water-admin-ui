@@ -40,7 +40,7 @@ function TimeseriesCombobox({ title, value, setValue, isValid, setIsValid }) {
 
   // debounced search fire function
   const debouncedSearchFire = useMemo(
-    () => debounce(doSearchFire, 150),
+    () => debounce(() => doSearchFire('timeseries'), 150),
     [doSearchFire]
   );
 
