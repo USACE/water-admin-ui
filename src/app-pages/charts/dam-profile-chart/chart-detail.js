@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { useConnect } from 'redux-bundler-hook';
 
-import TimeseriesCombobox from '../../app-components/inputs/timeseries-search-input';
+import TimeseriesCombobox from '../../../app-components/inputs/timeseries-search-input';
+
+import DamProfileChart from './chart';
 
 const DamProfileChartDetails = ({ mapping }) => {
   // Connect
@@ -97,9 +99,7 @@ const DamProfileChartDetails = ({ mapping }) => {
   return (
     <>
       <section id='chart' ref={chartRef}>
-        {/* <article>
-          <h4 style={{ textAlign: 'center' }}>CHART HERE</h4>
-        </article> */}
+        <DamProfileChart mapping={mapping} />
       </section>
       <section id='mappings'>
         <h4>Required Mappings</h4>

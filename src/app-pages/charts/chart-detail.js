@@ -2,8 +2,8 @@ import { useConnect } from 'redux-bundler-hook';
 import DeleteChartModal from '../../app-modals/delete-chart-modal.js';
 
 // Specialized detail sections, specific to each chart type
-import DamProfileChartDetail from './chart-detail-dam-profile.js';
-import BasicScatterChartDetail from './chart-detail-basic-scatter.js';
+import DamProfileChartDetail from './dam-profile-chart/chart-detail.js';
+import BasicScatterChartDetail from './basic-scatter-chart/chart-detail.js';
 
 function SpecializedChartDetail(type, props) {
   const formComponents = {
@@ -48,11 +48,6 @@ export default function ChartDetail() {
             </button>
           </div>
         </div>
-      </section>
-      <section id='chart'>
-        <article>
-          <h4 style={{ textAlign: 'center' }}>CHART HERE</h4>
-        </article>
       </section>
       {/* Return correct SpecializedChartDetail based on chart's type */}
       {SpecializedChartDetail(chart.type, { mapping: mappingObj })}
