@@ -34,7 +34,7 @@ const Levels = (svg, damScale, damTop, damBottom, levels = []) => {
     priorSide = 'left';
   lineData.forEach((d) => {
     if (
-      priorVal == -1 ||
+      priorVal === -1 ||
       priorVal - d.value > baseModifier ||
       priorSide !== d.side
     ) {
@@ -68,7 +68,7 @@ const Levels = (svg, damScale, damTop, damBottom, levels = []) => {
   lines
     .append('path')
     .attr('d', (d) => {
-      if (d.lineType == 'straight') {
+      if (d.lineType === 'straight') {
         return d.showLine ? createLine(length) : createLine(20);
       } else {
         return d.showLine

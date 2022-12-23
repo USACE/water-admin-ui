@@ -13,15 +13,15 @@ import TailwaterLevel from './elements/TailwaterLevel.js';
 import Levels from './elements/Levels.js';
 import Info from './elements/Info.js';
 
-export default function DamProfileChart(ref, info) {
+export default function DamProfileChart(info, ref) {
   const {
     pool,
     tail,
     inflow,
     outflow,
     surcharge,
-    damBottom,
-    damTop,
+    dambottom,
+    damtop,
     height = undefined,
     gradientBottom,
     gradientTop,
@@ -33,16 +33,16 @@ export default function DamProfileChart(ref, info) {
   // D3 SCRIPT
   ////////////
 
-  var margin = { top: 50, right: 50, bottom: 50, left: 50 };
+  // var margin = { top: 50, right: 50, bottom: 50, left: 50 };
   // var width = window.innerWidth - margin.left - margin.right; // Use the window's width
   // var height = window.innerHeight - margin.top - margin.bottom; // Use the window's height
-  var cWidth = 1240;
-  var cHeight = 650;
+  // var cWidth = 1240;
+  // var cHeight = 650;
 
   // Dam Scale
   const damScale = d3
     .scaleLinear()
-    .domain([damTop, damBottom])
+    .domain([damtop, dambottom])
     .range([130, 560]);
 
   // Build SVG; Add to Chart
@@ -65,7 +65,7 @@ export default function DamProfileChart(ref, info) {
   // create line on the left
   // replaces drawTicks()
   //////////////////////////
-  LeftAxis(svg, damTop, damBottom);
+  LeftAxis(svg, damtop, dambottom);
 
   ////////////////////////////
   // Draw Water Level
@@ -130,7 +130,7 @@ export default function DamProfileChart(ref, info) {
     Gradient(svg, damScale, gradientBottom, gradientTop);
   }
 
-  Levels(svg, damScale, damTop, damBottom, levels);
+  Levels(svg, damScale, damtop, dambottom, levels);
 
   Info(svg);
 }

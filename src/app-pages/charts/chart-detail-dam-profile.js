@@ -1,16 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { useConnect } from 'redux-bundler-hook';
 
-import TimeseriesCombobox from '../../../app-components/inputs/timeseries-search-input';
+import TimeseriesCombobox from '../../app-components/inputs/timeseries-search-input';
 
-import DamProfileChart from './chart';
-
-function DamProfileChartDetails() {
+const DamProfileChartDetails = ({ mapping }) => {
   // Connect
-  const { chartDetailMappingObject: mapping, doChartMappingSave } = useConnect(
-    'selectChartDetailMappingObject',
-    'doChartMappingSave'
-  );
+  const { doChartMappingSave } = useConnect('doChartMappingSave');
 
   // Values
   const [pool, setPool] = useState(mapping.pool);
@@ -102,7 +97,9 @@ function DamProfileChartDetails() {
   return (
     <>
       <section id='chart' ref={chartRef}>
-        <DamProfileChart />
+        {/* <article>
+          <h4 style={{ textAlign: 'center' }}>CHART HERE</h4>
+        </article> */}
       </section>
       <section id='mappings'>
         <h4>Required Mappings</h4>
@@ -165,6 +162,6 @@ function DamProfileChartDetails() {
       </section>
     </>
   );
-}
+};
 
 export default DamProfileChartDetails;

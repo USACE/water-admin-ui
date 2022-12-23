@@ -21,7 +21,7 @@ export default createRestBundle({
   sortAsc: false,
   reduceFurther: null,
   addons: {
-    selectChartDetailMappingObj: createSelector(
+    selectChartDetailMappingObject: createSelector(
       'selectChartDetailByRoute',
       (detail) => {
         if (!detail) {
