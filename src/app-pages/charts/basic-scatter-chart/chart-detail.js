@@ -1,4 +1,4 @@
-const BasicScatterChartDetails = ({ mapping }) => {
+function BasicScatterChartDetails() {
   // useEffect(() => {
   //   setPool(mapping?.pool);
   //   setTail(mapping?.tail);
@@ -30,6 +30,6 @@ const BasicScatterChartDetails = ({ mapping }) => {
       </section>
     </>
   );
-};
+}
 
 export default BasicScatterChartDetails;
