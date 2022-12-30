@@ -50,7 +50,7 @@ function TimeseriesCombobox({ title, value, onSelect }) {
 
   // debounced search fire function
   const debouncedSearchFire = useMemo(
-    () => debounce(() => doSearchFire('timeseries'), 150),
+    () => debounce(() => doSearchFire('timeseries'), 300),
     [doSearchFire]
   );
 

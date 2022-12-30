@@ -48,6 +48,9 @@ export default function DamProfileChart(info, ref) {
   // Build SVG; Add to Chart
   var svg = d3.select(ref);
 
+  // Clear any InnerHTML in the case that this function has already run against the provided ref
+  svg.selectChildren().remove();
+
   // @todo; see if this is necessary
   if (height !== undefined) {
     svg.attr('height', height);
