@@ -120,9 +120,9 @@ const Levels = (svg, damScale, damTop, damBottom, levels = []) => {
     .attr('x', (d) =>
       d.side === 'left' ? x[d.side] - 10 : x[d.side] + length + 10
     )
-    .attr('y', (d) => damScale(d.value) + d.modifier + radius + 6.5)
+    .attr('y', (d) => damScale(d.value) + d.modifier + radius + 16)
     .attr('font-family', 'sans-serif')
-    .attr('fill', '#000000')
+    .attr('fill', '#FF0000')
     .attr('font-size', '1em')
     .text((d) => `${d.value}'`);
 };

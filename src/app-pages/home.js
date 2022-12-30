@@ -5,7 +5,7 @@ function ProviderList() {
   return providers && providers.length ? (
     <ul>
       {providers.map((p) => (
-        <li>
+        <li key={p.provider}>
           <a href={`/${p.provider}`}>{`${p.provider}: ${p.provider_name}`} </a>
         </li>
       ))}

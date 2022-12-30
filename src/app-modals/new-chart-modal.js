@@ -53,11 +53,11 @@ export default function NewChartModal() {
         <header>New Chart</header>
         {/* Provider */}
         {/* todo; Limit providers shown here to providers in user's token */}
-        <label for='provider'>Provider</label>
+        <label htmlFor='provider'>Provider</label>
         <input type='text' value={provider?.provider_name} disabled />
 
         {/* CHART NAME FIELD */}
-        <label for='name'>
+        <label htmlFor='name'>
           Chart Name
           <input
             type='text'

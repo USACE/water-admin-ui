@@ -2,14 +2,24 @@ import { useEffect, useRef, useState } from 'react';
 import { useConnect } from 'redux-bundler-hook';
 
 import TimeseriesCombobox from '../../../app-components/inputs/timeseries-search-input';
+import NewChartMappingButton from '../new-chart-mapping-button';
 
 import DamProfileChart from './chart';
 
 function DamProfileChartDetails() {
   // Connect
-  const { chartDetailMappingObject: mapping, doChartMappingSave } = useConnect(
+  const {
+    chartMappingOptionsByGroup,
+    chartDetailMappingObject: mapping,
+    doChartMappingSave,
+    doChartMappingDelete,
+    doChartDetailFetch,
+  } = useConnect(
+    'selectChartMappingOptionsByGroup',
     'selectChartDetailMappingObject',
-    'doChartMappingSave'
+    'doChartMappingSave',
+    'doChartMappingDelete',
+    'doChartDetailFetch'
   );
 
   // Values
@@ -20,18 +30,6 @@ function DamProfileChartDetails() {
   const [damtop, setDamtop] = useState(mapping.damtop);
   const [dambottom, setDambottom] = useState(mapping.dambottom);
 
-  // Invalid Checks for Form Fields (used to set aria-invalid property on form values)
-  // TODO; More strict validation checking. Currently, if a string value is set, it is considered valid.
-  //       In the future, may want to consider checking if string value represents a valid timeseries
-  const [poolIsValid, setPoolIsValid] = useState(pool ? true : false);
-  const [tailIsValid, setTailIsValid] = useState(tail ? true : false);
-  const [inflowIsValid, setInflowIsValid] = useState(inflow ? true : false);
-  const [outflowIsValid, setOutflowIsValid] = useState(outflow ? true : false);
-  const [damtopIsValid, setDamtopIsValid] = useState(damtop ? true : false);
-  const [dambottomIsValid, setDambottomIsValid] = useState(
-    dambottom ? true : false
-  );
-
   useEffect(() => {
     setPool(mapping?.pool);
     setTail(mapping?.tail);
@@ -41,63 +39,52 @@ function DamProfileChartDetails() {
     setDambottom(mapping?.dambottom);
   }, [mapping]);
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    console.log('SUBMIT');
-    let payload = [];
-    if (poolIsValid) {
-      payload.push({
-        variable: 'pool',
-        key: pool.key,
-        datatype: pool.datatype,
-        provider: pool.provider,
-      });
-    }
-    if (tailIsValid) {
-      payload.push({
-        variable: 'tail',
-        key: tail.key,
-        datatype: tail.datatype,
-        provider: tail.provider,
-      });
-    }
-    if (inflowIsValid) {
-      payload.push({
-        variable: 'inflow',
-        key: inflow.key,
-        datatype: inflow.datatype,
-        provider: inflow.provider,
-      });
-    }
-    if (outflowIsValid) {
-      payload.push({
-        variable: 'outflow',
-        key: outflow.key,
-        datatype: outflow.datatype,
-        provider: outflow.provider,
-      });
-    }
-    if (damtopIsValid) {
-      payload.push({
-        variable: 'damtop',
-        key: damtop.key,
-        datatype: damtop.datatype,
-        provider: damtop.provider,
-      });
-    }
-    if (dambottomIsValid) {
-      payload.push({
-        variable: 'dambottom',
-        key: dambottom.key,
-        datatype: dambottom.datatype,
-        provider: dambottom.provider,
-      });
-    }
-    // SUBMIT PAYLOAD
-    doChartMappingSave(payload);
-  }
-
   const chartRef = useRef(null);
+
+  // handler requires variable string like 'pool' and returns a function
+  // that accepts an object with keys/values to uniquely identify a timeseries;
+  // Specifically {provider, datatype, key}.
+  const handler = (variable) => (selectedItem) => {
+    // if no variable, this function is being constructed incorrectly
+    // in software development. Should always be called like: handler('pool', {...})
+    if (!variable) {
+      console.error('Variable not specified; Handler implemented incorrectly');
+      return;
+    }
+    // If called with timeseries information set to null, delete existing mappings for variable in database.
+    // This results in behavior "if you clear the form input, delete is called on the database"
+    if (!selectedItem) {
+      console.log(`Delete Mapping for Variable: ${variable}`);
+      doChartMappingDelete({ variable: variable }, doChartDetailFetch, true);
+      return;
+    }
+    // Otherwise, save the mapping
+    const { provider, datatype, key } = selectedItem;
+    doChartMappingSave(
+      {
+        variable: variable,
+        provider: provider,
+        datatype: datatype,
+        key: key,
+      },
+      doChartDetailFetch,
+      true,
+      true
+    );
+  };
+
+  // Mapped levels, ordered alphabetically a --> z
+  const mappedArr = Object.values(mapping)
+    ?.filter((m) => m.variable.slice(0, 6) === 'level-')
+    .sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0));
+
+  // Determine lst of all level variables available for mapping,
+  // EXCLUDING any level variables that have already been mapped. This
+  // will prevent us from showing options in the dropdown that have already
+  // been configured
+  const options = Object.values(chartMappingOptionsByGroup?.levels).filter(
+    (item) => !mapping[item.variable]
+  );
 
   return (
     <>
@@ -107,60 +94,61 @@ function DamProfileChartDetails() {
       <section id='mappings'>
         <h4>Required Mappings</h4>
         {/* Pool and Tailwater */}
-        <form onSubmit={handleSubmit} autoComplete='off'>
+        <form autoComplete='off'>
           <div id='mappings'>
             {/* POOL INPUT */}
             <TimeseriesCombobox
               title='Pool Water Level'
               value={pool}
-              setValue={setPool}
-              isValid={poolIsValid}
-              setIsValid={setPoolIsValid}
+              onSelect={handler('pool')}
             />
             {/* TAILWATER INPUT */}
             <TimeseriesCombobox
               title='Tailwater Level'
               value={tail}
-              setValue={setTail}
-              isValid={tailIsValid}
-              setIsValid={setTailIsValid}
+              onSelect={handler('tail')}
             />
             {/* INFLOW INPUT */}
             <TimeseriesCombobox
               title='Inflow'
               value={inflow}
-              setValue={setInflow}
-              isValid={inflowIsValid}
-              setIsValid={setInflowIsValid}
+              onSelect={handler('inflow')}
             />
             {/* OUTFLOW INPUT */}
             <TimeseriesCombobox
               title='Outflow'
               value={outflow}
-              setValue={setOutflow}
-              isValid={outflowIsValid}
-              setIsValid={setOutflowIsValid}
+              onSelect={handler('outflow')}
             />
             {/* DAM TOP INPUT */}
             <TimeseriesCombobox
               title='Top of Dam'
               value={damtop}
-              setValue={setDamtop}
-              isValid={damtopIsValid}
-              setIsValid={setDamtopIsValid}
+              onSelect={handler('damtop')}
             />
             {/* DAM BOTTOM INPUT */}
             <TimeseriesCombobox
               title='Bottom of Dam (Streambed)'
               value={dambottom}
-              setValue={setDambottom}
-              isValid={dambottomIsValid}
-              setIsValid={setDambottomIsValid}
+              onSelect={handler('dambottom')}
             />
           </div>
-          <button type='submit' onClick={handleSubmit}>
-            Submit
-          </button>
+        </form>
+      </section>
+      <section>
+        <h4>
+          Levels
+          <NewChartMappingButton variables={options} />
+        </h4>
+        <form autoComplete='off'>
+          {mappedArr.map((l, idx) => (
+            <TimeseriesCombobox
+              key={idx}
+              title={chartMappingOptionsByGroup?.levels[l.variable].name}
+              value={l}
+              onSelect={handler(l.variable)}
+            />
+          ))}
         </form>
       </section>
     </>

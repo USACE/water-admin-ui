@@ -29,7 +29,7 @@ export default function Breadcrumb() {
       {
         <ul>
           {parts.map((p, idx) => (
-            <li>
+            <li key={idx}>
               {/* Right-most item in breadcrumb represents current page and should not be clickable */}
               {idx === parts.length - 1 ? (
                 p === '' ? (

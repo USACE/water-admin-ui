@@ -1,10 +1,12 @@
 import createRestBundle from '@usace/create-rest-bundle';
+import { createSelector } from 'redux-bundler';
+import { CHART_MAPPING_OPTIONS } from './chart-mapping-config'; // todo; integrate this data into api so it's not managed in the UI
 
 const apiUrl = process.env.REACT_APP_WATER_API_URL;
 
 export default createRestBundle({
   name: 'chartMapping',
-  uid: 'key',
+  uid: '',
   prefetch: false,
   staleAfter: 0, //5min
   persist: false,
@@ -17,5 +19,12 @@ export default createRestBundle({
   sortBy: '',
   sortAsc: false,
   reduceFurther: null,
-  addons: {},
+  addons: {
+    selectChartMappingOptionsByGroup: createSelector(
+      'selectChartDetailByRoute',
+      (chart) => {
+        return CHART_MAPPING_OPTIONS[chart?.type];
+      }
+    ),
+  },
 });

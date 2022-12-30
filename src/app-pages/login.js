@@ -11,8 +11,8 @@ export default function Login() {
   }
 
   return (
-    <main class='container flex'>
-      <article class='grid login'>
+    <main className='container flex'>
+      <article className='grid login'>
         <div>
           <hgroup>
             <h1>Sign in</h1>
@@ -25,7 +25,7 @@ export default function Login() {
             }}
           >
             <fieldset>
-              <label for='remember'>
+              <label htmlFor='remember'>
                 <input
                   type='checkbox'
                   role='switch'
@@ -35,7 +35,7 @@ export default function Login() {
                 Remember me
               </label>
             </fieldset>
-            <button type='submit' class='contrast'>
+            <button type='submit' className='contrast'>
               Login
             </button>
           </form>

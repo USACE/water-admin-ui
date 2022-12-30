@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { debounce } from 'lodash';
 import { Combobox } from '@headlessui/react';
 import { useConnect } from 'redux-bundler-hook';
@@ -25,7 +25,7 @@ const TimeseriesItem = ({
   );
 };
 
-function TimeseriesCombobox({ title, value, setValue, isValid, setIsValid }) {
+function TimeseriesCombobox({ title, value, onSelect }) {
   const {
     doSearchClear,
     doSearchFire,
@@ -38,6 +38,16 @@ function TimeseriesCombobox({ title, value, setValue, isValid, setIsValid }) {
     'selectTimeseriesSearchItems'
   );
 
+  // TODO; More strict validation checking. Currently, if a string value is set, it is considered valid.
+  //       In the future, may want to consider checking if string value represents a valid timeseries
+  const [isValid, setIsValid] = useState(false);
+
+  useEffect(() => {
+    if (value) {
+      setIsValid(true);
+    }
+  }, [value]);
+
   // debounced search fire function
   const debouncedSearchFire = useMemo(
     () => debounce(() => doSearchFire('timeseries'), 150),
@@ -48,8 +58,7 @@ function TimeseriesCombobox({ title, value, setValue, isValid, setIsValid }) {
     <Combobox
       value={value}
       onChange={(v) => {
-        setValue(v);
-        setIsValid(true); // TODO; Automatically setIsValid true when timeseries is selected. May want to add more explicit validation checking
+        onSelect(v);
       }}
     >
       <Combobox.Label>{title}</Combobox.Label>
@@ -63,8 +72,7 @@ function TimeseriesCombobox({ title, value, setValue, isValid, setIsValid }) {
             doSearchClear();
             // reset the selected location to 'null' if the entire field is deleted
             if (event.target.value?.length === 0) {
-              setValue(null);
-              setIsValid(false);
+              onSelect(null);
             }
             return;
           }
@@ -80,7 +88,7 @@ function TimeseriesCombobox({ title, value, setValue, isValid, setIsValid }) {
             value={t}
           >
             {({ active, selected }) => (
-              <li
+              <div
                 className={`combobox-option${active ? ' active' : ''}${
                   selected ? ' selected' : ''
                 }`}
@@ -88,7 +96,7 @@ function TimeseriesCombobox({ title, value, setValue, isValid, setIsValid }) {
                 {/* To avoid conflict between React.js keyword 'key' and timeseries entity property 'key',
                     the prop name timeseriesKey is used to pass the .key property of timeseries */}
                 <TimeseriesItem timeseriesKey={t.key} {...t} />
-              </li>
+              </div>
             )}
           </Combobox.Option>
         ))}

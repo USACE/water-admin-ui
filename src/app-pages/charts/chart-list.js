@@ -10,7 +10,7 @@ const NewChartButton = () => {
         fontWeight: '800',
         fontSize: 18,
       }}
-      class='primary'
+      className='primary'
       href='#newchart'
       onClick={(e) => {
         e.preventDefault();
@@ -54,7 +54,7 @@ export default function ChartList() {
       <ChartListHeader />
       {chartItems?.length
         ? chartItems.map((v) => (
-            <section>
+            <section key={v?.slug}>
               <a href={`/${provider?.provider}/charts/${v.slug}`}>
                 <div>
                   <article>

@@ -13,7 +13,7 @@ function Layout({ children }) {
 
 function Header({ showBreadcrumb = true, children }) {
   return (
-    <header style={{ marginTop: 32 }} class='container'>
+    <header style={{ marginTop: 32 }} className='container'>
       <ConditionalWrapper
         condition={showBreadcrumb}
         wrapper={(children) => <hgroup>{children}</hgroup>}
@@ -28,7 +28,7 @@ function Header({ showBreadcrumb = true, children }) {
 
 function Footer({ children }) {
   return (
-    <footer class='container'>
+    <footer className='container'>
       <footer>
         <cite> - Minimum Viable Product</cite>
       </footer>
@@ -38,7 +38,7 @@ function Footer({ children }) {
 }
 
 function Main({ children }) {
-  return <main class='container'>{children}</main>;
+  return <main className='container'>{children}</main>;
 }
 
 Layout.Header = Header;
