@@ -17,7 +17,7 @@ function ReactDamProfileChart() {
 
   useEffect(() => {
     if (!optionsByGroup || !detail) {
-      return null;
+      return;
     }
     // Transform default variable mapping structure used in water-api
     // to specific shape needed by DamProfileChart(input, ref) variable 'input'

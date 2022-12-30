@@ -3,12 +3,12 @@ import DeleteChartModal from '../../app-modals/delete-chart-modal.js';
 
 // Specialized detail sections, specific to each chart type
 import DamProfileChartDetail from './dam-profile-chart/chart-detail.js';
-import BasicScatterChartDetail from './basic-scatter-chart/chart-detail.js';
+import ExampleScatterDetail from './example-scatter/chart-detail.js';
 
 function SpecializedChartDetail(type, props) {
   const formComponents = {
     'dam-profile-chart': <DamProfileChartDetail />,
-    'example-scatter': <BasicScatterChartDetail />,
+    'example-scatter': <ExampleScatterDetail />,
   };
   return formComponents[type];
 }

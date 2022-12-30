@@ -4,7 +4,7 @@ import { useConnect } from 'redux-bundler-hook';
 import TimeseriesCombobox from '../../../app-components/inputs/timeseries-search-input';
 import NewChartMappingButton from '../new-chart-mapping-button';
 
-import DamProfileChart from './chart';
+import ReactDamProfileChart from './chart';
 
 function DamProfileChartDetails() {
   // Connect
@@ -89,7 +89,7 @@ function DamProfileChartDetails() {
   return (
     <>
       <section id='chart' ref={chartRef}>
-        <DamProfileChart />
+        <ReactDamProfileChart />
       </section>
       <section id='mappings'>
         <h4>Required Mappings</h4>

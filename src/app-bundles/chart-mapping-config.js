@@ -8,6 +8,15 @@
 // group is a generic grouping, used to categorize variables into section or common functionality
 // within a visualization
 const CHART_MAPPING_OPTIONS = {
+  'example-scatter': {
+    required: {
+      pointcount: {
+        group: 'required',
+        variable: 'pointcount',
+        name: 'Point Count',
+      },
+    },
+  },
   'dam-profile-chart': {
     required: {
       pool: {

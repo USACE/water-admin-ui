@@ -84,7 +84,7 @@ function TimeseriesCombobox({ title, value, onSelect }) {
         {timeseriesSearchItems.map((t) => (
           <Combobox.Option
             autoComplete='off'
-            key={`${t.provider}-${t.key}`}
+            key={`${t.provider}-${t.datatype}-${t.key}`}
             value={t}
           >
             {({ active, selected }) => (

@@ -111,7 +111,7 @@ const Levels = (svg, damScale, damTop, damBottom, levels = []) => {
     .attr('y', (d) => damScale(d.value) + d.modifier + radius - 6.5)
     .attr('font-family', 'sans-serif')
     .attr('fill', '#FF0000')
-    .attr('font-size', '1em')
+    .attr('font-size', '0.8em')
     .text((d) => d.name);
 
   lines

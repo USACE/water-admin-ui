@@ -84,13 +84,13 @@ function LocationCombobox({
         {locationSearchItems.map((l) => (
           <Combobox.Option autoComplete='off' key={l.slug} value={l}>
             {({ active, selected }) => (
-              <li
+              <div
                 className={`combobox-option${active ? ' active' : ''}${
                   selected ? ' selected' : ''
                 }`}
               >
                 <LocationItem {...l} />
-              </li>
+              </div>
             )}
           </Combobox.Option>
         ))}

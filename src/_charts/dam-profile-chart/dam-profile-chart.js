@@ -13,7 +13,7 @@ import TailwaterLevel from './elements/TailwaterLevel.js';
 import Levels from './elements/Levels.js';
 import Info from './elements/Info.js';
 
-export default function DamProfileChart(info, ref) {
+export default function DamProfileChart(info, dom) {
   const {
     pool,
     tail,
@@ -46,9 +46,9 @@ export default function DamProfileChart(info, ref) {
     .range([130, 560]);
 
   // Build SVG; Add to Chart
-  var svg = d3.select(ref);
+  var svg = d3.select(dom);
 
-  // Clear any InnerHTML in the case that this function has already run against the provided ref
+  // Clear any InnerHTML in the case that this function has already run against the provided dom
   svg.selectChildren().remove();
 
   // @todo; see if this is necessary
