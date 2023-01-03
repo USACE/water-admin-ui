@@ -61,7 +61,32 @@ function TimeseriesCombobox({ title, value, onSelect }) {
         onSelect(v);
       }}
     >
-      <Combobox.Label>{title}</Combobox.Label>
+      <Combobox.Label>
+        <div className='container gx-0'>
+          <div className='row'>
+            <div className={`col-12 ${!value ? '' : 'col-md-4'}`}>{title}</div>
+            {!value ? null : (
+              <div
+                className={`col-12 col-md-8 text-md-end ${
+                  value?.latest_value ? 'text-success' : 'text-warning'
+                }`}
+              >
+                <small>
+                  Latest :{' '}
+                  {value?.latest_value ? (
+                    <span>
+                      <strong>{value.latest_value[1]}</strong>
+                      {` at ${value.latest_value[0]}`}
+                    </span>
+                  ) : (
+                    'Not Available'
+                  )}
+                </small>
+              </div>
+            )}
+          </div>
+        </div>
+      </Combobox.Label>
       <Combobox.Input
         aria-invalid={!isValid}
         displayValue={(t) => t && `${t?.key} (${t?.provider?.toUpperCase()})`}

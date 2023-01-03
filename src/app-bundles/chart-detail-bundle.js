@@ -21,6 +21,15 @@ export default createRestBundle({
   sortAsc: false,
   reduceFurther: null,
   addons: {
+    selectChartDetailApiLink: createSelector(
+      'selectChartDetailByRoute',
+      (detail) => {
+        if (!detail) {
+          return null;
+        }
+        return `${process.env.REACT_APP_WATER_API_URL}/charts/${detail.slug}?format=svg`;
+      }
+    ),
     selectChartDetailMappingObject: createSelector(
       'selectChartDetailByRoute',
       (detail) => {

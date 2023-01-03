@@ -1,5 +1,6 @@
 import { useConnect } from 'redux-bundler-hook';
 import DeleteChartModal from '../../app-modals/delete-chart-modal.js';
+import ChartApiLink from './chart-api-link.js';
 
 // Specialized detail sections, specific to each chart type
 import DamProfileChartDetail from './dam-profile-chart/chart-detail.js';
@@ -23,7 +24,7 @@ export default function ChartDetail() {
     <>
       <section>
         <div className='container mb-4'>
-          <div className='row align-items-start'>
+          <div className='row align-items-start mb-2'>
             <div className='col'>
               <h3 className='mb-0'>{chart.name}</h3>
               <p className='mb-0'>
@@ -42,6 +43,7 @@ export default function ChartDetail() {
               x Delete
             </button>
           </div>
+          <ChartApiLink />
         </div>
       </section>
       {/* Return correct SpecializedChartDetail based on chart's type */}
